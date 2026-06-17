@@ -3,13 +3,13 @@ variable "location" {
     description = "Azure region"
     type        = string
     default     = "West Europe"
-
-    variable "environment" {
+}
+variable "environment" {
     description = "Environment name (dev, staging, prod)"
     type        = string
-    }
+}
 
-    variable "resource_group_name" {
+variable "resource_group_name" {
+    description = "A description here is always needed"
     type = string
-    }
 }
