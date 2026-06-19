@@ -58,19 +58,19 @@ variable "management_subnet_address_prefix"{
 
 ######## NSG #########
 
-variable "nsg_app_name"{
+variable "app_nsg_name"{
     description = "App NSG"
     type        = string
     default     = "nsg-app-platform-dev"
 }
 
-variable "nsg_data_name"{
+variable "data_nsg_name"{
     description = "Data NSG"
     type        = string
     default     = "nsg-data-platform-dev"
 }
 
-variable "nsg_mgmt_name"{
+variable "mgmt_nsg_name"{
     description = "Management NSG"
     type        = string
     default     = "nsg-mgmt-platform-dev"

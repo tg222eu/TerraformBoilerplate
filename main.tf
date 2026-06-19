@@ -32,9 +32,27 @@ resource "azurerm_subnet" "data" {
   address_prefixes = [var.data_subnet_address_prefix]
 }
 
-resource "azurerm_subnet" "management" {
+resource "azurerm_subnet" "mgmt" {
   name             = var.management_subnet_name
   virtual_network_name = var.virtual_network_name
   resource_group_name  = var.networking_resource_group_name
   address_prefixes = [var.management_subnet_address_prefix]
+}
+
+resource "azurerm_network_security_group" "app" {
+  name                = var.app_nsg_name
+  location            = var.location
+  resource_group_name = var.networking_resource_group_name
+}
+
+resource "azurerm_network_security_group" "data" {
+  name                = var.data_nsg_name
+  location            = var.location
+  resource_group_name = var.networking_resource_group_name
+}
+
+resource "azurerm_network_security_group" "mgmt" {
+  name                = var.mgmt_nsg_name
+  location            = var.location
+  resource_group_name = var.networking_resource_group_name
 }
