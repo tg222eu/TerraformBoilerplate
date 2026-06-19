@@ -12,27 +12,27 @@ resource "azurerm_resource_group" "networking" {
   location  = var.location
 }
 
-resource "azurerm_virtual_network" "networking" {
+resource "azurerm_virtual_network" "hub" {
   name                 = var.virtual_network_name
   location             = var.location
   resource_group_name  = var.networking_resource_group_name
 }
 
-resource "azurerm_subnet" "networking" {
+resource "azurerm_subnet" "app" {
   name             = var.app_subnet_name
   virtual_network_name = var.virtual_network_name
   resource_group_name  = var.networking_resource_group_name
   address_prefixes = [var.app_subnet_address_prefix]
 }
 
-resource "azurerm_subnet" "networking" {
+resource "azurerm_subnet" "data" {
   name             = var.data_subnet_name
   virtual_network_name = var.virtual_network_name
   resource_group_name  = var.networking_resource_group_name
   address_prefixes = [var.data_subnet_address_prefix]
 }
 
-resource "azurerm_subnet" "networking" {
+resource "azurerm_subnet" "management" {
   name             = var.management_subnet_name
   virtual_network_name = var.virtual_network_name
   resource_group_name  = var.networking_resource_group_name
