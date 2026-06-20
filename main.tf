@@ -16,59 +16,62 @@ resource "azurerm_virtual_network" "hub" {
   name                 = var.virtual_network_name
   location             = var.location
   resource_group_name  = var.platform_resource_group_name
-  address_space = ["10.0.0.0/16"]
+  address_space        = ["10.0.0.0/16"]
 }
 
 resource "azurerm_subnet" "app" {
-  name             = var.app_subnet_name
-  virtual_network_name = var.virtual_network_name
-  resource_group_name  = var.platform_resource_group_name
-  address_prefixes = [var.app_subnet_address_prefix]
+  name                  = var.app_subnet_name
+  virtual_network_name  = var.virtual_network_name
+  resource_group_name   = var.platform_resource_group_name
+  address_prefixes      = [var.app_subnet_address_prefix]
+  depends_on            = [azurerm_virtual_network.hub]
 }
 
 resource "azurerm_subnet" "data" {
-  name             = var.data_subnet_name
-  virtual_network_name = var.virtual_network_name
-  resource_group_name  = var.platform_resource_group_name
-  address_prefixes = [var.data_subnet_address_prefix]
+  name                  = var.data_subnet_name
+  virtual_network_name  = var.virtual_network_name
+  resource_group_name   = var.platform_resource_group_name
+  address_prefixes      = [var.data_subnet_address_prefix]
+  depends_on            = [azurerm_virtual_network.hub]
 }
 
 resource "azurerm_subnet" "mgmt" {
-  name             = var.management_subnet_name
-  virtual_network_name = var.virtual_network_name
-  resource_group_name  = var.platform_resource_group_name
-  address_prefixes = [var.management_subnet_address_prefix]
+  name                  = var.management_subnet_name
+  virtual_network_name  = var.virtual_network_name
+  resource_group_name   = var.platform_resource_group_name
+  address_prefixes      = [var.management_subnet_address_prefix]
+  depends_on            = [azurerm_virtual_network.hub]
 }
 
 resource "azurerm_network_security_group" "app" {
-  name                = var.app_nsg_name
-  location            = var.location
-  resource_group_name = var.platform_resource_group_name
+  name                  = var.app_nsg_name
+  location              = var.location
+  resource_group_name   = var.platform_resource_group_name
 }
 
 resource "azurerm_network_security_group" "data" {
-  name                = var.data_nsg_name
-  location            = var.location
-  resource_group_name = var.platform_resource_group_name
+  name                  = var.data_nsg_name
+  location              = var.location
+  resource_group_name   = var.platform_resource_group_name
 }
 
 resource "azurerm_network_security_group" "mgmt" {
-  name                = var.mgmt_nsg_name
-  location            = var.location
-  resource_group_name = var.platform_resource_group_name
+  name                  = var.mgmt_nsg_name
+  location              = var.location
+  resource_group_name   = var.platform_resource_group_name
 }
 
 resource "azurerm_subnet_network_security_group_association" "app" {
-  subnet_id                 = azurerm_subnet.app.id
-  network_security_group_id = azurerm_network_security_group.app.id
+  subnet_id                   = azurerm_subnet.app.id
+  network_security_group_id   = azurerm_network_security_group.app.id
 }
 
 resource "azurerm_subnet_network_security_group_association" "data" {
-  subnet_id                 = azurerm_subnet.data.id
-  network_security_group_id = azurerm_network_security_group.data.id
+  subnet_id                   = azurerm_subnet.data.id
+  network_security_group_id   = azurerm_network_security_group.data.id
 }
 
 resource "azurerm_subnet_network_security_group_association" "mgmt" {
-  subnet_id                 = azurerm_subnet.mgmt.id
-  network_security_group_id = azurerm_network_security_group.mgmt.id
+  subnet_id                   = azurerm_subnet.mgmt.id
+  network_security_group_id   = azurerm_network_security_group.mgmt.id
 }
