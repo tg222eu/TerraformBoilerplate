@@ -15,32 +15,30 @@ resource "azurerm_resource_group" "platform" {
 resource "azurerm_virtual_network" "hub" {
   name                 = var.virtual_network_name
   location             = var.location
-  resource_group_name  = var.platform_resource_group_name
+  resource_group_name  = azurerm_resource_group.platform.name # Creates implicit dependency
   address_space        = ["10.0.0.0/16"]
+  depends_on           = [var.platform_resource_group_name]
 }
 
 resource "azurerm_subnet" "app" {
   name                  = var.app_subnet_name
   virtual_network_name  = var.virtual_network_name
-  resource_group_name   = var.platform_resource_group_name
+  resource_group_name   = azurerm_resource_group.platform.name
   address_prefixes      = [var.app_subnet_address_prefix]
-  depends_on            = [azurerm_virtual_network.hub]
 }
 
 resource "azurerm_subnet" "data" {
   name                  = var.data_subnet_name
   virtual_network_name  = var.virtual_network_name
-  resource_group_name   = var.platform_resource_group_name
+  resource_group_name   = azurerm_resource_group.platform.name
   address_prefixes      = [var.data_subnet_address_prefix]
-  depends_on            = [azurerm_virtual_network.hub]
 }
 
 resource "azurerm_subnet" "mgmt" {
   name                  = var.management_subnet_name
   virtual_network_name  = var.virtual_network_name
-  resource_group_name   = var.platform_resource_group_name
+  resource_group_name   = azurerm_resource_group.platform.name
   address_prefixes      = [var.management_subnet_address_prefix]
-  depends_on            = [azurerm_virtual_network.hub]
 }
 
 resource "azurerm_network_security_group" "app" {
