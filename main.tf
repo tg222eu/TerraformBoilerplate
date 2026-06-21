@@ -50,7 +50,7 @@ resource "azurerm_network_security_group" "app" {
   location              = var.location
   resource_group_name   = var.platform_resource_group_name
   depends_on            = [azurerm_virtual_network.hub]
-  tags                  = locals.common_tags
+  tags                  = local.common_tags
 }
 
 resource "azurerm_network_security_group" "data" {
@@ -58,7 +58,7 @@ resource "azurerm_network_security_group" "data" {
   location              = var.location
   resource_group_name   = var.platform_resource_group_name
   depends_on            = [azurerm_virtual_network.hub]
-  tags                  = locals.common_tags
+  tags                  = local.common_tags
 }
 
 resource "azurerm_network_security_group" "mgmt" {
@@ -66,7 +66,7 @@ resource "azurerm_network_security_group" "mgmt" {
   location              = var.location
   resource_group_name   = var.platform_resource_group_name
   depends_on            = [azurerm_virtual_network.hub]
-  tags                  = locals.common_tags
+  tags                  = local.common_tags
 }
 
 resource "azurerm_subnet_network_security_group_association" "app" {
