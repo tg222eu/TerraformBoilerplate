@@ -10,7 +10,7 @@ terraform {
 resource "azurerm_resource_group" "platform" {
   name      = var.platform_resource_group_name
   location  = var.location
-  tags      = locals.common_tags
+  tags      = local.common_tags
 }
 
 resource "azurerm_virtual_network" "hub" {
