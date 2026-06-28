@@ -99,7 +99,7 @@ variable "owner" {
 variable "cost_center" {
     description = "Cost center for billing"
     type        = string
-    default     = "IT-LandingZone"
+    default     = "IT-LZ"
 }
 
 # ==========================
